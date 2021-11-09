@@ -4,3 +4,6 @@
 n = int(input("> 公差：\n"))
 l = [1 + (i-1) * n for i in range(1,10)]
 print(l)
+
+
+
