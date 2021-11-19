@@ -14,4 +14,5 @@ print(set(l1) & set(l2))
 
 # 并集
 print(set(l1) | set(l2))
-print(set(l1).union(set(l2)))
+print(type(set(l1).union(set(l2))))
+print(type((1,)))
