@@ -28,6 +28,7 @@ class person2(metaclass=upper_attr):
     
     foo = 'AAVccc'
 
+
 # metaclass : 类
 class UpperCase(type):
 
