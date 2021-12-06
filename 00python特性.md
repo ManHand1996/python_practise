@@ -45,3 +45,35 @@ def func(name):
 G: golbal 全局
 
 B: build-in 内置
+
+### 3.Python 类中私有，保护表示
+
+```python
+class C(A,B):
+
+    name = 'public name' # 公有变量
+    _protected_name = '_protected_name' # 类实例和子类实例可以访问
+    __private_name = '__private_name' # 只能该类对象访问，类实例访问会报错
+
+    # __xx__ 双下划线系统定义名字
+    # 继承对象创建时会执行一次
+    def __init__(self) -> None:
+        super().__init__()
+        super().get_classname()
+        C.static_func()
+    
+    def __ffdel__(self):
+        print('__del__')
+
+    @classmethod
+    def clsm(cls):
+        # 类对象调用
+        pass
+    
+    @staticmethod
+    def static_func():
+        print('static method...')
+        print(C.__private_name)
+```
+
+### 4. 接口类和抽象类
