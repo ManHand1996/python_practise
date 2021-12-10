@@ -15,3 +15,5 @@ t = Test()
 # 为实例对象动态添加属性
 setattr(t, 'name','tt')
 print(getattr(t,'name'))
+
+
