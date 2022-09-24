@@ -4,7 +4,7 @@
 
 from collections import Counter
 
-
+import pympler
 def CounterStr(letter_str):
     c = {}
     for s in letter_str:
@@ -13,7 +13,9 @@ def CounterStr(letter_str):
         else:
             c[s] += 1
     
-    return dict(sorted(c.items(), key = lambda x:x[1], reverse=True))
+    return dict(sorted(c.items(), 
+                       key = lambda x:x[1], 
+                       reverse=True))
 
 
 def CounterStr2(letter_str):

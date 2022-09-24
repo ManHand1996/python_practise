@@ -1,5 +1,7 @@
 #-*-coding:utf-8 -*-
 from mmap import mmap
+
+from sqlalchemy import true
 """
     Q：读取10G大文件，现在只有4G内存 如何做？
 
@@ -47,6 +49,23 @@ def test_yield2(lines_read):
 #         f.writelines(str(i)*10 + "\n")
 
 
-for data in test_yield2(1000):
-    print(data)
+# for data in test_yield2(1000):
+#     print(data)
 
+
+def gen_num():
+    r = 0
+    while true:
+        r += 1
+        try:
+            n = yield r
+        except GeneratorExit:
+            pass
+        
+g = gen_num()
+g.send(None)
+for i in g:
+    if i == 5:
+        r = g.close()
+        print(r)
+        

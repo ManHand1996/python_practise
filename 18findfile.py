@@ -16,7 +16,9 @@ def findFilePath(root_path, suffix):
 # 创建生成器generator， 用于查找目录和子目录下的所有文件
 # arg: topdown = true 自上而下(即从当前路径开始往下查找所有文件) 反之亦然
 # 返回3元组（path:str, path_name:[], file_name:[]）
-
+# 
+# 必须使用绝对路径
+# 
 def findFileWithWalk(root_path, suffix):
     for path,path_names, filenames in os.walk(top=root_path):
         for filename in filenames:
@@ -38,4 +40,4 @@ def glob_func(fp, postfix):
 #findFilePath("D:\\Download\\django_analysis",".pyc")
 
 #findFileWithWalk("D:\\Download\\django_analysis",".pyc")
-glob_func("D:\\Download\\django_analysis",".pyc")
+findFileWithWalk("/home/manhand/Downloads",".tar.gz")

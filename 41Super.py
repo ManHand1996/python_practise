@@ -9,24 +9,37 @@
 
 # Python3 中MRO 为广度优先
 class E():
+    def __init__(self) -> None:
+        print('init E')
     def get_classname(self):
         print(E)
 
 class A(E):
     def __init__(self) -> None:
-        pass
+        super(A, self).__init__()
+        print('init A')
     # def get_classname(self):
     #     print(A)
 
 class B(E):
     def __init__(self) -> None:
         # 确保父类正确初始化
-        super().__init__()
+        super(B, self).__init__()
+        print('init B')
 
     def get_classname(self):
         print(B)
 
-class C(A,B):
+class F(E):
+    def __init__(self) -> None:
+        # 确保父类正确初始化
+        super(F,self).__init__()
+        print('init F')
+
+    def get_classname(self):
+        print(B)
+
+class C(B,A,F):
 
     name = 'public name' # 公有变量
     _protected_name = '_protected_name' # 类实例和子类实例可以访问
@@ -35,9 +48,10 @@ class C(A,B):
     # __xx__ 双下划线系统定义名字
     # 继承对象创建时会执行一次
     def __init__(self) -> None:
-        super().__init__()
-        super().get_classname()
-        C.static_func()
+        # super().__init__()
+        super(C, self).__init__()
+        print('init C')
+        # C.static_func()
     
     def __ffdel__(self):
         print('__del__')
@@ -45,23 +59,26 @@ class C(A,B):
     @classmethod
     def clsm(cls):
         # 类对象调用
-        pass
+        print('class method')
     
     @staticmethod
     def static_func():
         print('static method...')
-        print(C.__private_name)
+        print(C.name)
 
 
         
 
 c = C()
-#c.static_func()
-print(c._protected_name)
+print(C.mro())
+# c.static_func()
+# c.clsm()
+# print(c._protected_name)
 #print(c.name)
-print(c.__private_name)
-print(c.__ffdel__())
-import inspect
+# print(c.__private_name)
+# print(c.name)
+# print(c.__ffdel__())
+# import inspect
 #print(inspect.getmro(C))
 #print(getattr(c, "static_func"))
 #print(dir(c))

@@ -1,97 +1,70 @@
 
-from functools import wraps
+"""
+装饰器理解:
+
+1.装饰器返回的是可调用对象
+2.装饰器定义时已经运行
+3.装饰器实际是对函数进行重新定义
+格式:
+
+func_name = (decorator(params))(func_name) # 带参数
+func_name = decorator(func_name) # 无参数
+
+# 多个装饰器
+
+func_name = dec1(params)(dec2(params)(func_name)) # 定义时从inside装饰器开始执行, 定义是只是执行该装饰器函数
+
+func_name() # 调用时,从outdis开始指向, 即装饰器的内部函数
+
+
+
+
+
+"""
+
 import datetime
-# def DecoratorTime(f1):
-#     print(f1)
-#     @wraps
-#     def wrapper(func,*args, **kwargs):
-#         print(args)
-#         print(kwargs)
-#         if datetime.datetime.now().day >= 5:
-#             print('END1...')
-#             return func(*args, **kwargs)
-
-#         else:
-#             print('END2...')
-#             raise BaseException('aaaa')
-        
-#     return wrapper
 
 
-# @DecoratorTime(f1=2442)
-# def test(*args,**kwargs):
-#     print('test:')
-#     print(args)
-#     print(kwargs)
-
-
-
-
-# 1.装饰器带参数
-# 相当于 test2 = d2(f=12)(test2)
-def d2(f=0):
-    print(f)
-
-    # def wrapper(func):
-    #     print('装饰器带参数')
-    #     def deco( *args, **kwargs):
-    #         func(*args)
-    #     return deco
+def decorator_no_parmas(func):
     
-    def wrapper(func, *args, **kwargs):
+    print('decorator_no_parmas',func.__name__)
+    def wrapper(*args, **kwargs):
+        print('start decorator_no_parmas')
+        
         func(*args, **kwargs)
-        # test2 =  wrapper(test) -> None
-        # test2()
+        print('end decorator_no_parmas')
+
+         
     return wrapper
 
-@d2(f=12)
-def test2(*args):
-    
-    print('test2')
-    print(args)
-# wrapper = deco
-# test2 = wrapper(test) -> deco 可调用对象
-# test2 = test2(1,11)
 
-# 2.被装饰器函数带参数
+def decorator_parmas(g=3):
+    # 装饰器返回可调用对象 , 解释时会将原函数对象作为第一个参数 obj(func_name)
+    def decorator(func):
+        print('decorator_parmas',func.__name__)
+        # 原函数参数
+        def wrapper(*args, **kwargs):
+            print('start decorator_parmas')
+            func(*args, **kwargs)
+            print('end decorator_parmas')
+            
+        return wrapper
+        # return func(*args, **kwargs)
 
-# def d3(func):
-#     def wrapper(*args, **kwargs):
-#         print('被装饰器函数带参数 start')
-#         r = func(*args, **kwargs)
-#         print('被装饰器函数带参数 end')
-#         return r
-#     return wrapper
+    return decorator
 
-# @d3
-# def test3(*args, **kwargs):
-#     print('test3')
 
-# test3(1,2,3,a=123)
-
-# test2 = 
-
-# def get_parameter(*args,**kwargs):  # 工厂函数，用来接受@get_parameter('index.html/')的'index.html/'
-#     def log_time(func):
-#         def make_decorater():
-#             print(args,kwargs)
-#             print('现在开始装饰')
-#             func()
-#             print('现在结束装饰')
-#         return make_decorater
-#     return log_time
-
-# @get_parameter('index.html/')
-# def test2():
-#     print('我是被装饰的函数')
-    # return num+1
-
-# 2.被装饰函数带参数
-
-# 3.两者都带参数
+# @decorator_no_parmas
+# @decorator_parmas(g=5)
+def test2(a, b):
+        
+    print(a + b)
 
 
 
-#问题1.装饰器在定义时已经运行?
-# 是的，相当于  
-# test = wrapper(test)
+test2 = decorator_no_parmas(decorator_parmas(g=4)(test2))
+
+test2(10,20)
+
+print(test2.__name__)
+

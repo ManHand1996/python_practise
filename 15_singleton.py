@@ -16,15 +16,19 @@ class SingeltonBase(object):
         # __new__() 静态方法在__init__ 前调用，可以在这里重写，并设置类静态属性
         if not cls._instance:
             cls._instance = super().__new__(cls,*args, **kwargs)
+            #cls._instance = object.__new__(cls, *args, **kwargs)
         return cls._instance
 
 class Foo1(SingeltonBase):
     pass
 
-# obj1 = Foo1()
-# obj2 = Foo1()
-# print(obj1._instance)
-# print(obj2._instance)
+obj1 = Foo1()
+obj2 = Foo1()
+print('SingletonBase..')
+print(dir(obj1))
+print(dir(obj2))
+import sys
+print(sys.getrefcount(obj2))
 
 # 2.装饰器实现单例模式
 from functools import wraps
